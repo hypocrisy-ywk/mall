@@ -1,52 +1,50 @@
 <template>
-    <div class="cart">
-        <navbar>
-            <div slot="center">购物车 ( {{cartlength}} )</div>
-        </navbar>
-        <cartlist :cartlist = "$store.state.cartlist" class="cartlist"/>
-        <cartbottombar/>
-    </div>   
+  <div id="cart">
+    <nav-bar class="nav-bar"><div slot="center">购物车({{cartCount}})</div></nav-bar>
+    <cart-list class="cart-list" :cart-list="cartList"></cart-list>
+    <bottom-bar></bottom-bar>
+  </div>
 </template>
 
 <script>
-    
-    import navbar from "../../components/common/navbar/navbar"
-    
-    import cartlist from "./cartlist"
-    import cartbottombar from "./cartbottombar"
+  import NavBar from 'common/navbar/NavBar'
+  import CartList from './childComps/CartList'
+  import BottomBar from './childComps/BottomBar'
 
-    export default {
-        name: 'cart',
-        computed:{
-            cartlength(){
-                return this.$store.state.cartlist.length
-            }
-        },
-        components:{
-            navbar,
-            cartlist,
-            cartbottombar
-        }
+	export default {
+		name: "Cart",
+    components: {
+		  NavBar,
+      CartList,
+      BottomBar
+    },
+    computed: {
+		  cartList() {
+		    return this.$store.getters.cartList
+      },
+      cartCount() {
+		    return this.$store.getters.cartCount
+      }
     }
+	}
 </script>
 
 <style scoped>
-    .cart{
-        height: 100vh;
-    }
-    .navbar{
-        background: var(--color-tint);
-        height:44px;
-        color:#fff;
-        position:relative;
-        left: 0;
-        right:0;
-        top:0;
-    }
-   /*  .cartlist{
-        overflow: hidden;
-        position:absolute;
-        top:44px;
-        bottom:49px;
-    } */
+  #cart {
+    /*position: relative;*/
+    height: 100vh;
+  }
+
+  .nav-bar {
+    background-color: var(--color-tint);
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .cart-list {
+    position: absolute;
+    top: 44px;
+    bottom: 49px;
+    width: 100%;
+  }
 </style>

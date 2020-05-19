@@ -1,64 +1,68 @@
 <template>
-    <div>
-        <navbar class="navbar">
-            <div slot="left" class="left" @click="backclick">
-                <img src="~assets/img/common/back.svg">
-            </div>
-            <div slot="center" class="center">
-                <div v-for="(item,index) in titles"
-                     class="item"
-                     @click="itemclick(index)"
-                     :class="{active:index===currentindex}">{{item}}</div>
-            </div>
-        </navbar>
+  <nav-bar class="detail-nav">
+    <img slot="left" class="back" @click="backClick" src="~assets/img/common/back.svg">
+    <div class="title" slot="center">
+      <span class="title-item"
+            v-for="(item, index) in titleInfos" :key="index"
+            :class="{'active': index===currentIndex}" @click="itemClick(index)">
+        {{item}}
+      </span>
     </div>
+  </nav-bar>
 </template>
 
 <script>
-    import navbar from '../../../components/common/navbar/navbar'
-    export default {
-        name:'detailnavbar',
-        data(){
-            return{
-                titles:['商品','参数','评论','推荐'],
-                currentindex:0,
-            }
-        },
-        methods:{
-            backclick(){
-                this.$router.go(-1)
-            },
-            itemclick(index){
-                this.currentindex = index;
-                this.$emit('itemclick',index)
-            }
-        },
-        components:{
-            navbar
+  import NavBar from 'common/navbar/NavBar'
+
+	export default {
+		name: "DetailNavBar",
+    components: {
+		  NavBar
+    },
+    props: {
+		  titleInfos: {
+		    type: Array,
+        default: () => {
+          return ['商品', '参数', '评论', '推荐']
         }
+      },
+      currentIndex: {
+		    type: Number,
+        default: 0
+      }
+    },
+    methods: {
+      itemClick: function (index) {
+        this.$emit('itemClick', index)
+      },
+      backClick() {
+        this.$router.back()
+      }
     }
+	}
 </script>
 
 <style scoped>
-    .navbar{
-        position:fixed;
-        background: #fff;
-        z-index: 999;
-        width:100%
-    }
-    .center{
-        display:flex;
-        font-size: 15px;
-        padding: 0 5px;
-        color:black
-    }
-    .left{
-        padding-top:8px
-    }
-    .center .item{
-        flex:1;
-    }
-    .active{
-        color:red;
-    }
+  .detail-nav {
+    background-color: #fff;
+    font-weight: normal;
+  }
+
+  .title {
+    display: flex;
+    padding: 0 20px;
+    font-size: 14px;
+  }
+
+  .title-item {
+    flex: 1;
+  }
+
+  .title-item.active {
+    color: var(--color-high-text);
+  }
+
+  .back {
+    margin-top: 12px;
+  }
 </style>

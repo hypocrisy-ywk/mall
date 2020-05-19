@@ -1,45 +1,48 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
 
-const home = () => import('../views/home/home')
-const category = () => import('../views/category/category')
-const cart = () => import('../views/cart/cart')
-const profile = () => import('../views/profile/profile')
-const detail = () => import('../views/detail/detail')
+const Home = () => import('views/home/Home')
+const Category = () => import('views/category/Category')
+const Cart = () => import('views/cart/Cart')
+const Profile = () => import('views/profile/Profile')
+const Detail = () => import('views/detail/Detail')
 
-Vue.use(Router)
+// 1.安装VueRouter
+Vue.use(VueRouter)
 
-export default new Router({
-    routes: [{
-            path: '',
-            redirect: '/home'
-        },
-        {
-            path: '/home',
-            component: home
-        },
-        {
-            path: '/category',
-            component: category
-        },
-        {
-            path: '/cart',
-            component: cart
-        },
-        {
-            path: '/profile',
-            component: profile
-        },
-        {
-            path:'/detail',
-            component:detail
-        }
-    ],
-    mode: 'history'
+// 2.配置路由信息
+const routes = [
+  {
+    path: '/',
+    redirect: '/home'
+  },
+  {
+    path: '/home',
+    component: Home
+  },
+  {
+    path: '/category',
+    component: Category
+  },
+  {
+    path: '/cart',
+    component: Cart
+  },
+  {
+    path: '/profile',
+    component: Profile
+  },
+  {
+    path: '/detail',
+    component: Detail
+  }
+]
+
+// 3.创建路由对象
+const router = new VueRouter({
+  mode: 'history',
+  routes
 })
 
-const originalPush = Router.prototype.replace;
-Router.prototype.replace = function replace(location) {
-    return originalPush.call(this, location).catch(err => err)
-} //解决双击报错的问题!!!!!
-
+// 4.导出
+export default router

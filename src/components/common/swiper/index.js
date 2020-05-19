@@ -1,6 +1,6 @@
-import swiper from './swiper'
-import swiperitem from './swiperitem'
+import Swiper from './Swiper'
+import SwiperItem from './SwiperItem'
 
 export {
-  swiper, swiperitem
+  Swiper, SwiperItem
 }
